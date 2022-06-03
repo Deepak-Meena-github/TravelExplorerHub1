@@ -1,6 +1,8 @@
 package com.example.services;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import com.example.exception.IternaryNotFoundException;
@@ -10,31 +12,37 @@ import com.example.model.Passenger;
 
 public class IternaryService {
     
-    private  Iternary iternary;
+    private final Map<String,Iternary> iternaryMap;
 
-    public Iternary getIternary(int numberOfPassengers){
-        if(iternary == null){
-            iternary = new Iternary(UUID.randomUUID().toString(), "MyIternary", numberOfPassengers, new ArrayList<Destination>(), new ArrayList<Passenger>());
-            return iternary;
-        }
-        if(iternary.getPassengerCapacity()!=numberOfPassengers){
-            throw new IternaryNotFoundException();
-        }
-        return iternary;
+    public IternaryService(){
+        this.iternaryMap = new HashMap<>();
     }
 
-    public Iternary getIternary(){
-        if(iternary == null){
+    public Iternary createIternary(String iternaryName, int passengerCapacity){
+       Iternary iternary = new Iternary(UUID.randomUUID().toString(), iternaryName, passengerCapacity, new ArrayList<Destination>(), new ArrayList<Passenger>());
+       iternaryMap.put(iternary.getIternaryId(), iternary);
+       return iternary;
+    }
+
+    public Iternary getIternary(String iternaryId){
+        if(!this.iternaryMap.containsKey(iternaryId)){
             throw new IternaryNotFoundException();
         }
-        return iternary;
+        return this.iternaryMap.get(iternaryId);
     }
-    public void addDestination(Destination destination){
-        iternary.addDestination(destination);
+
+    public void addDestination(Destination destination, String iternaryId){
+        if(!this.iternaryMap.containsKey(iternaryId)){
+            throw new IternaryNotFoundException();
+        }
+        this.iternaryMap.get(iternaryId).addDestination(destination);
     }
     
-    public void addPassenger(Passenger passenger)
+    public void addPassenger(Passenger passenger,String iternaryId)
     {
-        iternary.addPassenger(passenger);
+        if(!this.iternaryMap.containsKey(iternaryId)){
+            throw new IternaryNotFoundException();
+        }
+        this.iternaryMap.get(iternaryId).addPassenger(passenger);
     }
 }
