@@ -1,0 +1,21 @@
+# Compiled files
+/target/
+/out/
+
+# IDE settings
+/.idea/
+/*.iml
+
+# Log files
+*.log
+
+# Binary archives
+*.jar
+*.war
+*.ear
+
+# Environment configurations
+.env
+
+# Java KeyStores
+*.jks

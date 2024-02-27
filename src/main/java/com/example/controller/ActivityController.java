@@ -22,7 +22,7 @@ public class ActivityController {
             System.out.println("Activity ID : "+currentActivity.getActivityId()+"\n"+
             "Activity Name : "+currentActivity.getActivityName()+"\n"+
             "Activity Description : "+currentActivity.getActivityDescription()+"\n"+
-            "Can also add other deatils here");
+            "Additional details can be added here");
         }
     }
 }
